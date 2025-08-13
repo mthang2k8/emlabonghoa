@@ -1,4 +1,30 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Kiểm tra thiết bị di động và hướng màn hình
+  function isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
+  function isLandscape() {
+    return window.innerWidth > window.innerHeight;
+  }
+  function showRotateMessage() {
+    const rotateMsg = document.getElementById('rotate-msg');
+    if (rotateMsg) rotateMsg.style.display = 'flex';
+    document.body.classList.add('not-loaded');
+  }
+  function hideRotateMessage() {
+    const rotateMsg = document.getElementById('rotate-msg');
+    if (rotateMsg) rotateMsg.style.display = 'none';
+    document.body.classList.remove('not-loaded');
+  }
+  function checkOrientation() {
+    if (isMobile() && !isLandscape()) {
+      showRotateMessage();
+    } else {
+      hideRotateMessage();
+    }
+  }
+  window.addEventListener('resize', checkOrientation);
+  checkOrientation();
   const c = setTimeout(() => {
     document.body.classList.remove("not-loaded");
     clearTimeout(c);
