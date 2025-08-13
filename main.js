@@ -7,20 +7,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const audio = document.getElementById('bg-music');
   const runText = document.getElementById('run-text');
 
-  // Chờ click lần đầu để phát nhạc và ẩn hướng dẫn
+  // Chờ click lần đầu vào toàn trang để phát nhạc và ẩn hướng dẫn
   function startMusic() {
     audio.play().catch(err => console.log('Không thể phát nhạc:', err));
-
     const guideText = document.getElementById('guide-text');
     if (guideText) {
       guideText.style.transition = 'opacity 0.5s';
       guideText.style.opacity = 0;
       setTimeout(() => guideText.remove(), 500);
     }
-
-    document.removeEventListener('click', startMusic);
+    document.body.removeEventListener('click', startMusic);
   }
-  document.addEventListener('click', startMusic);
+  document.body.addEventListener('click', startMusic);
 
   const lyricLines = [
     { start: 2.32, end: 16.08, text: "Em có biết rằng em là một bông hoa không" },
