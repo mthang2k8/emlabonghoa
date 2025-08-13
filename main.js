@@ -1,4 +1,4 @@
-onload = () => {
+document.addEventListener('DOMContentLoaded', () => {
   const c = setTimeout(() => {
     document.body.classList.remove("not-loaded");
     clearTimeout(c);
@@ -6,6 +6,21 @@ onload = () => {
 
   const audio = document.getElementById('bg-music');
   const runText = document.getElementById('run-text');
+
+  // Chờ click lần đầu để phát nhạc và ẩn hướng dẫn
+  function startMusic() {
+    audio.play().catch(err => console.log('Không thể phát nhạc:', err));
+
+    const guideText = document.getElementById('guide-text');
+    if (guideText) {
+      guideText.style.transition = 'opacity 0.5s';
+      guideText.style.opacity = 0;
+      setTimeout(() => guideText.remove(), 500);
+    }
+
+    document.removeEventListener('click', startMusic);
+  }
+  document.addEventListener('click', startMusic);
 
   const lyricLines = [
     { start: 2.32, end: 16.08, text: "Em có biết rằng em là một bông hoa không" },
@@ -99,4 +114,4 @@ onload = () => {
   audio.addEventListener('play', syncLyric);
   audio.addEventListener('pause', syncLyric);
   audio.addEventListener('ended', () => runText.textContent = '');
-};
+});
